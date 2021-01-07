@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="style.css">
+  <script src="html2canvas.js"></script>
+
+</head>
+
+<body>
+
+  <script>
+    function init() {
+      var nameButton = document.getElementById("nameButton");
+      var namefield = document.getElementById("namefield");
+      nameButton.onclick = function() {
+        var userName = namefield.value;
+        addName(userName);
+      }
+      var timeButton = document.getElementById("timeButton");
+      var timefield = document.getElementById("timefield");
+      timeButton.onclick = function() {
+        var eventTime = timefield.value;
+        addTime(eventTime);
+      }
+
+
+    }
+
+    function addName(userName) {
+      document.getElementById("name").innerHTML = userName;
+    }
+
+    document.addEventListener('readystatechange', function() {
+      if (document.readyState === "complete") {
+        init();
+      }
+    });
+
+    function addTime(eventTime) {
+      document.getElementById("time").innerHTML = eventTime;
+    }
+
+    document.addEventListener('readystatechange', function() {
+      if (document.readyState === "complete") {
+        init();
+      }
+    });
+
+
+  </script>
+
+  <form>
+    <input type="text" id="namefield" placeholder="Teacher/Student name" />
+    <input type="button" id="nameButton" value="Add" />
+  </form>
+
+  <form>
+    <input type="text" id="timefield" placeholder="Event Time" />
+    <input type="button" id="timeButton" value="Add" />
+  </form>
+
+  <form>
+    <input type="radio" id="qa" name="qa" value="qa">
+    <label for="qa">QA</label><br>
+    <input type="radio" id="lecture" name="lecture" value="lecture">
+    <label for="lecture">Lecture</label><br>
+    <input type="radio" id="other" name="gender" value="other">
+    <label for="other">Other</label>
+  </form>
+
+  <div class="slidecontainer">
+    <input type="range" min="100" max="600" value="250" name="Modules Quantity" class="slider" id="quantityRange">
+    <label for="Modules Quantity">Modules Quantity</label><br>
+    <input type="range" min="1" max="100" value="50" name="Modules Size" class="slider" id="sizeRange">
+    <label for="Modules Quantity">Modules Size</label><br>
+  </div>
+
+
+  <div id="main">
+
+    <main class="modules" id="screenshot">
+      <ul class="modules__list" id="modcontainer">
+
+        <li class="KABK">
+          <figure>
+            <h1>KABK</h1>
+          </figure>
+        </li>
+
+        <li class="info">
+          <figure>
+            <h1>BA Graphic Design + MA Non-linear Narrative </h1>
+          </figure>
+        </li>
+
+
+        <!-- <li class="subtitle">
+          <figure>
+            <h1>Kick-off: January 22, 2021 </h1>
+          </figure>
+        </li>
+
+        <li class="info">
+          <figure>
+            <h1>1600–1700 hrs CET </h1>
+          </figure>
+        </li> -->
+
+        <li class="title">
+          <figure>
+            <h1>Open <br> Department</h1>
+          </figure>
+        </li>
+
+        <li class="nametime">
+          <figure id="name">
+          </figure>
+        </li>
+
+        <li class="nametime">
+          <figure id="time">
+          </figure>
+        </li>
+
+      </ul>
+    </main>
+  </div>
+
+
+ <!-- screenshot button -->
+
+  <div>
+    <a id="a-make" href="#">Make a screenshot</a>
+    <a id="a-download" href="#" style="display:none;">Download a screenshot</a>
+  </div>
+
+
+  <!-- javascript-->
+
+
+<script type="text/javascript">
+
+    // creating modules
+    function moduleCreator() {
+    var i;
+    var x = document.getElementById("quantityRange").value;
+    for (i = 0; i < x; i++) {
+      var mod = document.createElement("LI");
+      mod.innerHTML = "<figure> <img src='1.jpg'> </figure>";
+      document.getElementById("modcontainer").appendChild(mod);
+    }
+    }
+
+    document.addEventListener('readystatechange', function() {
+      if (document.readyState === "complete") {
+        moduleCreator();
+      }
+    });
+
+
+
+// <!-- screenshot -->
+
+     function makeScreenshot() {
+       html2canvas(document.getElementById("screenshot"), {
+         scale: 1
+       }).then(canvas => {
+         canvas.id = "canvasID";
+         var main = document.getElementById("main");
+         while (main.firstChild) {
+           main.removeChild(main.firstChild);
+         }
+         main.appendChild(canvas);
+       });
+     }
+
+     document.getElementById("a-make").addEventListener('click', function() {
+       document.getElementById("a-make").style.display = "none";
+       makeScreenshot();
+       document.getElementById("a-download").style.display = "inline";
+     }, false);
+
+     document.getElementById("a-download").addEventListener('click', function() {
+       this.href = document.getElementById("canvasID").toDataURL();
+       this.download = "canvas-image.png";
+     }, false);
+     </script>
+
+
+</body>
+
+</html>
